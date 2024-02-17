@@ -1,15 +1,208 @@
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class SignIn extends StatelessWidget {
   const SignIn({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  Widget build(BuildContext context) {
+    return const SignInForm();
+  }
 }
 
-class _SignInState extends State<SignIn> {
+class SignInForm extends StatefulWidget {
+  const SignInForm({super.key});
+
+  @override
+  State<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
+  bool saving = false;
+  //final _authentication = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF6D71D2), Color(0xFF202475)],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 40),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.87, // 큰 박스 크기
+                decoration: BoxDecoration(
+                    color: const Color(0xFF6D71D2).withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(30), // 큰 박스 모서리 둥글게
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 3,
+                          spreadRadius: 3,
+                          offset: const Offset(0, 1))
+                    ]),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '  EMAIL',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(height: 0),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          // 패딩 조정
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.lightBlue),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter your email.';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 7),
+                      Text(
+                        '  PASSWORD',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 20,
+                        ),
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          // 패딩 조정
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(color: Colors.lightBlue),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter your password.';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 50),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 130,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(150),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(2.5, 2),
+                                blurRadius: 0,
+                                spreadRadius: -3,
+                              ),
+                            ],
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                // try {
+                                //   final currentUser = await _authentication
+                                //       .signInWithEmailAndPassword(
+                                //     email: email,
+                                //     password: password,
+                                //   );
+                                //   if (currentUser.user != null) {
+                                //     _formKey.currentState!.reset();
+                                //     FocusScope.of(context).unfocus();
+                                //     Navigator.push(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //         builder: (context) => HomePage(),
+                                //       ),
+                                //     );
+                                //   } else {
+                                //     print("로그인 실패: 사용자 정보가 없습니다.");
+                                //   }
+                                // } catch (e, stackTrace) {
+                                //   print("로그인 실패: $e");
+                                //   print("스택 트레이스: $stackTrace");
+                                // }
+                              }
+                            },
+                            child: Text(
+                              'SIGN IN',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                color: Colors.lightBlue[800],
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(vertical: 7),
+                              primary: Colors.white,
+                              onPrimary: Colors.lightBlue[800],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(150),
+                                side: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

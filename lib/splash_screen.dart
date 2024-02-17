@@ -12,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Offset> _textAnimation;
   late Animation<Offset> _titleAnimation;
 
   @override
@@ -26,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _titleAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(0, -1.06), // 텍스트 위로 이동
+      end: const Offset(0, -2.06), // 텍스트 위로 이동
     ).animate(_controller);
 
     Timer(Duration(seconds: 2), () {
@@ -63,12 +62,11 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 70),
               SlideTransition(
                 position: _titleAnimation,
                 child: Image.asset(
                   'assets/images/title.png',
-                  width: 200,
+                  width: MediaQuery.of(context).size.width * 0.8,
                 ),
               ),
             ],

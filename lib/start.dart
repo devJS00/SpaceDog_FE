@@ -22,10 +22,16 @@ class _StartState extends State<Start> {
             colors: [Color(0xFF6D71D2), Color(0xFF202475)],
           ),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 100),
+              Image.asset(
+                'assets/images/title.png',
+                width: MediaQuery.of(context).size.width * 0.8,
+              ),
               SizedBox(height: 100),
               Container(
                 width: 300, // 로그인 버튼 너비
@@ -65,7 +71,7 @@ class _StartState extends State<Start> {
                     );
                   },
                   child: Text(
-                    'SIGN UP',
+                    'SIGN IN',
                     style: TextStyle(
                         fontFamily: 'nbold',
                         fontSize: 18,
@@ -121,7 +127,7 @@ class _StartState extends State<Start> {
                     );
                   },
                   child: Text(
-                    'SIGN IN',
+                    'SIGN UP',
                     style: TextStyle(
                         fontFamily: 'nbold',
                         fontSize: 18,
@@ -137,11 +143,6 @@ class _StartState extends State<Start> {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 50),
-              Image.asset(
-                'assets/images/puang.png',
-                width: 150,
               ),
             ],
           ),
