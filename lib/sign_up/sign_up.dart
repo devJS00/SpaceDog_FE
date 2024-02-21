@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:space_dog/home_page.dart';
+
+import 'enter_dog_name.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
@@ -17,7 +23,7 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  //final _authentication = FirebaseAuth.instance;
+  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -45,7 +51,7 @@ class _SignupFormState extends State<SignupForm> {
                   width: MediaQuery.of(context).size.width * 0.87, // 큰 박스 크기
                   decoration: BoxDecoration(
                       color: const Color(0xFF6D71D2).withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(30), // 큰 박스 모서리 둥글게
+                      borderRadius: BorderRadius.circular(20), // 큰 박스 모서리 둥글게
                       boxShadow: [
                         BoxShadow(
                             color: Colors.black.withOpacity(0.1),
@@ -62,12 +68,11 @@ class _SignupFormState extends State<SignupForm> {
                       children: [
                         // ID
                         const Text(
-                          '  EMAIL',
+                          'EMAIL',
                           style: TextStyle(
-                            fontFamily: 'Inter',
-                            color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            fontFamily: 'silkscreen',
                             fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 0),
@@ -80,14 +85,14 @@ class _SignupFormState extends State<SignupForm> {
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(10.0),
                               borderSide: const BorderSide(
                                 color: Colors.black,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               // 포커스 됐을 때의 테두리
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(10.0),
                               borderSide:
                                   const BorderSide(color: Colors.lightBlue),
                             ),
@@ -95,17 +100,22 @@ class _SignupFormState extends State<SignupForm> {
                           onChanged: (value) {
                             email = value;
                           },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter your email.';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 10),
 
                         // PW
                         const Text(
-                          '  PASSWORD',
+                          'PASSWORD',
                           style: TextStyle(
-                            fontFamily: 'Inter',
-                            color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            fontFamily: 'silkscreen',
                             fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 0),
@@ -118,17 +128,23 @@ class _SignupFormState extends State<SignupForm> {
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               // 포커스 됐을 때의 테두리
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(10.0),
                               borderSide:
                                   const BorderSide(color: Colors.lightBlue),
                             ),
                           ),
                           onChanged: (value) {
                             password = value;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter your password.';
+                            }
+                            return null;
                           },
                         ),
                         const SizedBox(height: 50),
@@ -151,54 +167,54 @@ class _SignupFormState extends State<SignupForm> {
                             ),
                             child: ElevatedButton(
                               onPressed: () async {
-                                // try {
-                                //   setState(() {
-                                //     saving = true;
-                                //   });
-                                //   final newUser = await _authentication
-                                //       .createUserWithEmailAndPassword(
-                                //     email: email,
-                                //     password: password,
-                                //   );
-                                //   await FirebaseFirestore.instance.collection('users').doc(newUser.user!.uid).set({
-                                //     'email' : email,
-                                //   });
-                                //   if (newUser.user != null) {
-                                //     // 회원가입 성공
-                                //     _formKey.currentState!.reset();
-                                //     if (!mounted) return;
-                                //     FocusScope.of(context).unfocus();
-                                //     Navigator.push(context, _createRoute());
-                                //   } else {
-                                //     // 회원가입 실패 처리
-                                //     print("회원가입 실패: 사용자 정보가 없습니다.");
-                                //   }
-                                // } catch (e, stackTrace) {
-                                //   print("회원가입 실패: $e");
-                                //   print("스택 트레이스: $stackTrace");
-                                // }
-                                setState(() {
-                                  saving = false;
-                                });
+                                if (_formKey.currentState!.validate()) {
+                                  try {
+                                    setState(() {
+                                      saving = true;
+                                    });
+                                    final newUser = await _authentication
+                                        .createUserWithEmailAndPassword(
+                                      email: email,
+                                      password: password,
+                                    );
+                                    await FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(newUser.user!.uid)
+                                        .set({
+                                      'email': email,
+                                    });
+                                    if (newUser.user != null) {
+                                      // 회원가입 성공
+                                      print("success");
+                                      _formKey.currentState!.reset();
+                                      if (!mounted) return;
+                                      FocusScope.of(context).unfocus();
+                                      Navigator.push(context, _createRoute());
+                                    } else {
+                                      // 회원가입 실패 처리
+                                      print("회원가입 실패: 사용자 정보가 없습니다.");
+                                    }
+                                  } catch (e, stackTrace) {
+                                    print("회원가입 실패: $e");
+                                    print("스택 트레이스: $stackTrace");
+                                  }
+                                  setState(() {
+                                    saving = false;
+                                  });
+                                }
                               },
                               style: ElevatedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7),
-                                // 로그인 버튼 높이
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.lightBlue[800],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(150),
-                                  side: const BorderSide(color: Colors.black),
+                                  padding: EdgeInsets.symmetric(vertical: 7),
+                                  primary: Color(0xFF6D71D2).withOpacity(0.8),
+                                  elevation: 5),
+                              child: Text(
+                                'REGISTER',
+                                style: TextStyle(
+                                  fontFamily: 'silkscreen',
+                                  fontSize: 20,
+                                  color: Colors.white,
                                 ),
                               ),
-                              child: Text('Register',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontStyle: FontStyle.italic,
-                                  )),
                             ),
                           ),
                         ),
@@ -211,6 +227,40 @@ class _SignupFormState extends State<SignupForm> {
           ),
         ),
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => EnterDogName(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // 현재 화면에 대한 슬라이드 효과
+        var currentScreenSlide = Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(-1.0, 0.0),
+        ).animate(animation);
+
+        // 새 화면에 대한 슬라이드 효과
+        var newScreenSlide = Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(animation);
+
+        return Stack(
+          children: <Widget>[
+            SlideTransition(
+              position: currentScreenSlide,
+              child: const SignupForm(), // 현재 화면
+            ),
+            SlideTransition(
+              position: newScreenSlide,
+              child: child, // 새 화면
+            ),
+          ],
+        );
+      },
+      transitionDuration:
+          const Duration(milliseconds: 500), // 현재 -> 새로운 페이지 전환 시간
     );
   }
 }

@@ -36,7 +36,6 @@ class _LoadingWithNextPageState extends State<LoadingWithNextPage>
     // 3초 후에 다른 페이지로 이동
     Timer(Duration(seconds: 3), () {
       if (mounted) {
-        // 예를 들어 다른 페이지로 이동하는 코드를 작성
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => widget.nextPage),
@@ -81,6 +80,9 @@ class _LoadingWithNextPageState extends State<LoadingWithNextPage>
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 5,
             ),
             LinearProgressIndicator(
               minHeight: 3,

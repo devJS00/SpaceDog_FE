@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home_page.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -17,8 +21,14 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  Future setLogin() async {
+    // 로그인 상태를 저장
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLogin', true);
+  }
+
   bool saving = false;
-  //final _authentication = FirebaseAuth.instance;
+  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -43,7 +53,7 @@ class _SignInFormState extends State<SignInForm> {
                 width: MediaQuery.of(context).size.width * 0.87, // 큰 박스 크기
                 decoration: BoxDecoration(
                     color: const Color(0xFF6D71D2).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(30), // 큰 박스 모서리 둥글게
+                    borderRadius: BorderRadius.circular(20), // 큰 박스 모서리 둥글게
                     boxShadow: [
                       BoxShadow(
                           color: Colors.black.withOpacity(0.1),
@@ -59,15 +69,13 @@ class _SignInFormState extends State<SignInForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '  EMAIL',
+                        'EMAIL',
                         style: TextStyle(
-                          fontFamily: 'Inter',
+                          fontFamily: 'silkscreen',
                           color: Colors.white,
-                          fontStyle: FontStyle.italic,
                           fontSize: 20,
                         ),
                       ),
-                      SizedBox(height: 0),
                       TextFormField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -76,11 +84,11 @@ class _SignInFormState extends State<SignInForm> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(color: Colors.lightBlue),
                           ),
                         ),
@@ -96,11 +104,10 @@ class _SignInFormState extends State<SignInForm> {
                       ),
                       SizedBox(height: 7),
                       Text(
-                        '  PASSWORD',
+                        'PASSWORD',
                         style: TextStyle(
-                          fontFamily: 'Inter',
+                          fontFamily: 'silkscreen',
                           color: Colors.white,
-                          fontStyle: FontStyle.italic,
                           fontSize: 20,
                         ),
                       ),
@@ -109,15 +116,14 @@ class _SignInFormState extends State<SignInForm> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
-                          // 패딩 조정
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(color: Colors.lightBlue),
                           ),
                         ),
@@ -150,48 +156,43 @@ class _SignInFormState extends State<SignInForm> {
                           child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // try {
-                                //   final currentUser = await _authentication
-                                //       .signInWithEmailAndPassword(
-                                //     email: email,
-                                //     password: password,
-                                //   );
-                                //   if (currentUser.user != null) {
-                                //     _formKey.currentState!.reset();
-                                //     FocusScope.of(context).unfocus();
-                                //     Navigator.push(
-                                //       context,
-                                //       MaterialPageRoute(
-                                //         builder: (context) => HomePage(),
-                                //       ),
-                                //     );
-                                //   } else {
-                                //     print("로그인 실패: 사용자 정보가 없습니다.");
-                                //   }
-                                // } catch (e, stackTrace) {
-                                //   print("로그인 실패: $e");
-                                //   print("스택 트레이스: $stackTrace");
-                                // }
+                                try {
+                                  final currentUser = await _authentication
+                                      .signInWithEmailAndPassword(
+                                    email: email,
+                                    password: password,
+                                  );
+                                  if (currentUser.user != null) {
+                                    _formKey.currentState!.reset();
+                                    FocusScope.of(context).unfocus();
+                                    setLogin();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(),
+                                      ),
+                                    );
+                                  } else {
+                                    print("로그인 실패: 사용자 정보가 없습니다.");
+                                  }
+                                } catch (e, stackTrace) {
+                                  print("로그인 실패: $e");
+                                  print("스택 트레이스: $stackTrace");
+                                }
                               }
                             },
                             child: Text(
                               'SIGN IN',
                               style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 18,
-                                color: Colors.lightBlue[800],
-                                fontStyle: FontStyle.italic,
+                                fontFamily: 'silkscreen',
+                                fontSize: 20,
+                                color: Colors.white,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(vertical: 7),
-                              primary: Colors.white,
-                              onPrimary: Colors.lightBlue[800],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(150),
-                                side: BorderSide(color: Colors.black),
-                              ),
-                            ),
+                                padding: EdgeInsets.symmetric(vertical: 7),
+                                primary: Color(0xFF6D71D2).withOpacity(0.8),
+                                elevation: 5),
                           ),
                         ),
                       ),

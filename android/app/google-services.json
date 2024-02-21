@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "50695825499",
+    "project_id": "spacedog-414600",
+    "storage_bucket": "spacedog-414600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50695825499:android:6639cc0619b3e74a7f377e",
+        "android_client_info": {
+          "package_name": "com.example.space_dog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBcgDCWX2d1EbbpYf0FQWo3QwVPGllNAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

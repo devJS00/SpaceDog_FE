@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:starsview/starsview.dart';
 import 'dart:async';
 import 'start.dart';
 
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _titleAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(0, -2.06), // 텍스트 위로 이동
+      end: const Offset(0, -5.1), // 텍스트 위로 이동
     ).animate(_controller);
 
     Timer(Duration(seconds: 2), () {
@@ -50,28 +51,35 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF6D71D2), Color(0xFF202475)],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SlideTransition(
-                position: _titleAnimation,
-                child: Image.asset(
-                  'assets/images/title.png',
-                  width: MediaQuery.of(context).size.width * 0.8,
-                ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF6D71D2), Color(0xFF202475)],
               ),
-            ],
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SlideTransition(
+                    position: _titleAnimation,
+                    child: Image.asset(
+                      'assets/images/title.png',
+                      width: MediaQuery.of(context).size.width * 0.8,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          StarsView(
+            fps: 60,
+          ),
+        ],
       ),
     );
   }
