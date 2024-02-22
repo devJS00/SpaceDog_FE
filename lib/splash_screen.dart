@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:starsview/starsview.dart';
 import 'dart:async';
-import 'start.dart';
+import 'start_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

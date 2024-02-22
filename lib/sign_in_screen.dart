@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_page.dart';
+import 'home_screen.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});

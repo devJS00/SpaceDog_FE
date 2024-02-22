@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:space_dog/home_page.dart';
+import 'package:space_dog/home_screen.dart';
 
-import 'enter_dog_name.dart';
+import 'enter_dog_name_screen.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

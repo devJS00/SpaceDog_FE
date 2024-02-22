@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:space_dog/sign_in.dart';
+import 'package:space_dog/sign_in_screen.dart';
 import 'package:space_dog/splash_screen.dart';
-import 'package:space_dog/home_page.dart';
-import 'package:space_dog/start.dart';
+import 'package:space_dog/home_screen.dart';
+import 'package:space_dog/start_screen.dart';
 import 'notification/notification_list.dart';
-import 'sign_up/enter_dog_name.dart';
+import 'sign_up/enter_dog_name_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NotificationList()),
+        ChangeNotifierProvider(create: (_) => SoundProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,

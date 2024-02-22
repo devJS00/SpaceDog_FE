@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class FindDog extends StatefulWidget {
-  const FindDog({super.key});
+  final currentLat;
+  final currentLong;
+  const FindDog({
+    super.key,
+    required this.currentLat,
+    required this.currentLong,
+  });
 
   @override
   State<FindDog> createState() => _FindDogState();
@@ -11,8 +17,8 @@ class FindDog extends StatefulWidget {
 class _FindDogState extends State<FindDog> {
   static final LatLng schoolLatlng = LatLng(
     //위도와 경도 값 지정
-    37.540853,
-    127.078971,
+    37.5048940706581,
+    126.95508069893845,
   );
 
   static final CameraPosition initialPosition = CameraPosition(

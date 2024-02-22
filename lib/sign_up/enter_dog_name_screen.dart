@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'enter_home_lat_lng.dart';
+import 'enter_lat_lng_screen.dart';
 
 class EnterDogName extends StatefulWidget {
   const EnterDogName({Key? key});
