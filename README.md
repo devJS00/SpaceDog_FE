@@ -12,7 +12,6 @@
 🎬 https://www.youtube.com/
 
 
-
 <br>
 
 ## 👥 Members
@@ -66,19 +65,19 @@
 
 | Main | Barking Sound | Breaking Sound | 
 | :------------: | :------------: | :------------: |
-|<img  height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/8b4086cc-7856-43d3-a0bf-9a760f462633.png"/> |  <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/d47db192-2508-4bed-9347-8f48dfbfa4a5.png"/> | <img height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/66b3e850-d263-48fc-b05b-eafe8f55a64b.png"/>  |
+|<img  height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/b84107ed-da1c-47e7-9622-adfa2b68a181"/> |  <img height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/81eab0b0-e216-443d-9f3e-a3e13bed8768"/> | <img height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/b26abce2-5227-4198-bb96-21e32759373a"/>  |
 
 | Escaped | Track Location |
 | :------------: | :------------: | 
-|<img  height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/8b4086cc-7856-43d3-a0bf-9a760f462633.png"/> |  <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/d47db192-2508-4bed-9347-8f48dfbfa4a5.png"/> | 
+| <img  height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/e4aabda7-a5ac-4168-8361-03549b739c09"/> | <img height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/70ab5add-f2cc-4a80-808d-72a8ac746467"/> | 
 
 | Notifications | 
 | :------------: | 
-|<img  height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/f34b06c7-1c58-4f0c-9b0a-6743f923c406.png"/> |
- 
+|<img  height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/05fb83d9-7f79-41ca-ad0b-1fde868e58d5"/> |
+
 
 <br>
 
- ## 📱 How To Run
+ ## 🏃🏻‍♀️ How To Run
  1. Clone SpaceDog_FE repository.
  2. Open in Android Studio.
