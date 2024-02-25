@@ -7,10 +7,13 @@
 
 'Space Dog' is an application with a wearable device for dogs, to help hearing-impaired individuals in caring for their pets. Our application detects when a dog barks or breaks something and alerts the user when their pet escapes, providing the ability to track its location.
 
-* Google Soultion Challenge 2024
-
 🎬 https://www.youtube.com/
 
+
+## 🐈‍⬛ GitHub
+FE: https://github.com/GDSC-CAU/SpaceDog_FE
+
+BE: https://github.com/GDSC-CAU/SpaceDog_BE
 
 <br>
 
@@ -54,16 +57,14 @@
 
 <img width="500" alt="image" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/48afb51c-0ad0-42c9-8eb9-ae918def80fb">
 
-<br>
-
 
  ## 📱 Screens
 
 | SIgn-in/Sign-up | 
 | :------------: |
-| <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/ff66b97e-6319-4d81-8bb6-4144fff48543.png"/> |
+| <img height="360" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/08327c68-52c5-4537-a83b-4145bc7dcd39"/> |
 
-| Main | Barking Sound | Breaking Sound | 
+| Default | Barking Sound | Breaking Sound | 
 | :------------: | :------------: | :------------: |
 |<img  height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/b84107ed-da1c-47e7-9622-adfa2b68a181"/> |  <img height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/81eab0b0-e216-443d-9f3e-a3e13bed8768"/> | <img height="350" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/b26abce2-5227-4198-bb96-21e32759373a"/>  |
 
@@ -79,5 +80,18 @@
 <br>
 
  ## 🏃🏻‍♀️ How To Run
- 1. Clone SpaceDog_FE repository.
- 2. Open in Android Studio.
+ 1. Clone "SpaceDog_FE" repository fron GitHub.
+```sh
+   git clone https://github.com/dscdut/sharinghub
+   ```
+ 2. Open the project folder in Android Studio.
+
+ 3. Run the following commands to install all dependencies.
+```bash
+flutter pub get
+```
+
+4. Run the project.
+```bash
+flutter run
+```
