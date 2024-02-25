@@ -13,10 +13,6 @@ import 'notification/local_notification.dart';
 import 'notification/notifications_page.dart';
 import 'settings_screen.dart';
 
-class LocationProvider with ChangeNotifier {}
-
-class SoundProvider with ChangeNotifier {}
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -52,9 +48,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               onPressed: () {
                 // LocalNotifications.showSimpleNotification(
-                //     title: "SpaceDog",
-                //     body: "Your Dog has escaped",
-                //     payload: "");
+                //     title: "SPACE DOG", body: "Laika has escaped", payload: "");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -112,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                       'Error: ${dogNameSnapshot.error}');
                                 } else {
                                   if (dogNameSnapshot.hasData) {
-                                    String dog_name =
+                                    String dogName =
                                         dogNameSnapshot.data!['dog_name'];
                                     // String currentSound =
                                     //     soundSnapshot.data!['sound'];
@@ -120,11 +114,12 @@ class _HomePageState extends State<HomePage> {
                                     //     locationSnapshot.data!['latitude'];
                                     // String currentLong =
                                     //     locationSnapshot.data!['longitude'];
+
                                     return DogState(
                                         currentSound: 2,
                                         currentLat: 10.0,
                                         currentLong: 6.0,
-                                        dogName: dog_name);
+                                        dogName: dogName);
                                   } else {
                                     return Text('No data available');
                                   }
@@ -142,7 +137,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class DogState extends StatelessWidget {
+class DogState extends StatefulWidget {
   final int currentSound;
   final double currentLat;
   final double currentLong;
@@ -157,203 +152,98 @@ class DogState extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<DogState> createState() => _DogStateState();
+}
+
+class _DogStateState extends State<DogState> {
+  late Future<DocumentSnapshot<Object?>> myFuture;
+
+  @override
+  void initState() {
+    //listenToNotifications();
+    super.initState();
+    myFuture = getUserData();
+  }
+
+  Future<DocumentSnapshot> getUserData() async {
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc('BtTzYG4snqVJyOqr7h83ecWQfsV2')
+        .get();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // default state
 
-    if (currentSound == 0) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindDog(
-                        currentLat: currentLat,
-                        currentLong: currentLong,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                  width: MediaQuery.of(context).size.width * 0.17,
-                  height: MediaQuery.of(context).size.width * 0.17,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red.withOpacity(0.7),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        spreadRadius: 3,
-                        offset: const Offset(0, 1),
-                      )
-                    ],
-                  ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white.withOpacity(0.8),
-                    size: 40,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.65,
-            height: MediaQuery.of(context).size.width * 0.65,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF6D71D2).withOpacity(0.3),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 1),
-                )
-              ],
-            ),
-            child: Stack(
+    return FutureBuilder<DocumentSnapshot>(
+      future: myFuture,
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          double maxLat = snapshot.data!['max_lat'];
+          print(maxLat);
+          double minLat = snapshot.data!['min_lat'];
+          double maxLong = snapshot.data!['max_long'];
+          double minLong = snapshot.data!['min_long'];
+
+          if (widget.currentLat > maxLat ||
+              widget.currentLat < minLat ||
+              widget.currentLong > maxLong ||
+              widget.currentLong < minLong) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                WaveAnimation(
-                  size: 170,
-                  color: Colors.red,
-                ),
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Image.asset(
-                    'assets/images/dog_state/escaped.png',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          MessageBox(
-            message: '$dogName has escaped',
-          ),
-        ],
-      );
-    } else if (currentSound == 1) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindDog(
-                        currentLat: currentLat,
-                        currentLong: currentLong,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindDog(
+                              currentLat: widget.currentLat,
+                              currentLong: widget.currentLong,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.width * 0.17,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red.withOpacity(0.7),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 40,
+                        ),
                       ),
                     ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                  width: MediaQuery.of(context).size.width * 0.17,
-                  height: MediaQuery.of(context).size.width * 0.17,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFF6D71D2).withOpacity(0.8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        spreadRadius: 3,
-                        offset: const Offset(0, 1),
-                      )
-                    ],
-                  ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white.withOpacity(0.8),
-                    size: 40,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                height: MediaQuery.of(context).size.width * 0.7,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFF6D71D2).withOpacity(0.3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      spreadRadius: 3,
-                      offset: const Offset(0, 1),
-                    )
                   ],
                 ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: Image.asset(
-                  'assets/images/dog_state/dog_floating.png',
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          MessageBox(
-            message: '....',
-          ),
-        ],
-      );
-    }
-    // when dog is barking
-    else if (currentSound == 2) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindDog(
-                        currentLat: currentLat,
-                        currentLong: currentLong,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                  width: MediaQuery.of(context).size.width * 0.17,
-                  height: MediaQuery.of(context).size.width * 0.17,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: MediaQuery.of(context).size.width * 0.65,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF6D71D2).withOpacity(0.8),
+                    color: const Color(0xFF6D71D2).withOpacity(0.3),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
@@ -363,84 +253,166 @@ class DogState extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white.withOpacity(0.8),
-                    size: 40,
+                  child: Stack(
+                    children: [
+                      WaveAnimation(
+                        size: 170,
+                        color: Colors.red,
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Image.asset(
+                          'assets/images/dog_state/escaped.png',
+                          width: MediaQuery.of(context).size.width * 0.85,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.65,
-            height: MediaQuery.of(context).size.width * 0.65,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF6D71D2).withOpacity(0.3),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 1),
-                )
+                SizedBox(
+                  height: 30,
+                ),
+                MessageBox(
+                  message: '${widget.dogName} has escaped',
+                ),
               ],
-            ),
-            child: Stack(
+            );
+          } else if (widget.currentSound == 1) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                WaveAnimation(
-                  size: 170,
-                  color: Colors.white,
-                ),
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Image.asset(
-                    'assets/images/dog_state/dog_bark.png',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          MessageBox(
-            message: '$dogName is barking',
-          ),
-        ],
-      );
-    }
-    // when dog broke something
-    else if (currentSound == 3) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindDog(
-                        currentLat: currentLat,
-                        currentLong: currentLong,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindDog(
+                              currentLat: widget.currentLat,
+                              currentLong: widget.currentLong,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.width * 0.17,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF6D71D2).withOpacity(0.8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 40,
+                        ),
                       ),
                     ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                  width: MediaQuery.of(context).size.width * 0.17,
-                  height: MediaQuery.of(context).size.width * 0.17,
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      height: MediaQuery.of(context).size.width * 0.65,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF6D71D2).withOpacity(0.3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 3,
+                            spreadRadius: 3,
+                            offset: const Offset(0, 1),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Image.asset(
+                        'assets/images/dog_state/dog_floating.png',
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                MessageBox(
+                  message: '....',
+                ),
+              ],
+            );
+          }
+          // when dog is barking
+          else if (widget.currentSound == 2) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindDog(
+                              currentLat: widget.currentLat,
+                              currentLong: widget.currentLong,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.width * 0.17,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF6D71D2).withOpacity(0.8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: MediaQuery.of(context).size.width * 0.65,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF6D71D2).withOpacity(0.8),
+                    color: const Color(0xFF6D71D2).withOpacity(0.3),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
@@ -450,61 +422,129 @@ class DogState extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white.withOpacity(0.8),
-                    size: 40,
+                  child: Stack(
+                    children: [
+                      WaveAnimation(
+                        size: 170,
+                        color: Colors.white,
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Image.asset(
+                          'assets/images/dog_state/dog_bark.png',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.65,
-            height: MediaQuery.of(context).size.width * 0.65,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF6D71D2).withOpacity(0.3),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 1),
-                )
+                SizedBox(
+                  height: 30,
+                ),
+                MessageBox(
+                  message: '${widget.dogName} is barking',
+                ),
               ],
-            ),
-            child: Stack(
+            );
+          }
+          // when dog broke something
+          else if (widget.currentSound == 3) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                WaveAnimation(
-                  size: 170,
-                  color: Colors.white,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindDog(
+                              currentLat: widget.currentLat,
+                              currentLong: widget.currentLong,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.width * 0.17,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF6D71D2).withOpacity(0.8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Image.asset(
-                    'assets/images/dog_state/fragile.png',
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: MediaQuery.of(context).size.width * 0.65,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFF6D71D2).withOpacity(0.3),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        spreadRadius: 3,
+                        offset: const Offset(0, 1),
+                      )
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      WaveAnimation(
+                        size: 170,
+                        color: Colors.white,
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Image.asset(
+                          'assets/images/dog_state/fragile.png',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                MessageBox(
+                  message: 'Seems like ${widget.dogName} broke something',
+                ),
               ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          MessageBox(
-            message: 'Seems like $dogName broke something',
-          ),
-        ],
-      );
-    }
-    // when dog escaped
-    else {
-      return SizedBox();
-    }
+            );
+          }
+          // when dog escaped
+          else {
+            return SizedBox();
+          }
+        }
+
+        return CircularProgressIndicator();
+      },
+    );
   }
 }
 

@@ -13,7 +13,8 @@ class SoundStream {
     yield* Stream.periodic(Duration(seconds: 3), (_) async {
       try {
         final response = await dio.get("$_API_PREFIX/soundLog/$uid");
-        //print(response.data);
+        // print("hello");
+        // print(response.data['sound']);
         return response;
       } catch (e) {
         throw Exception("Failed to load data");
