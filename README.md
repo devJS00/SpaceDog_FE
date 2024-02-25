@@ -64,9 +64,13 @@
 | :------------: |
 | <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/ff66b97e-6319-4d81-8bb6-4144fff48543.png"/> |
 
-| Main | Barking Sound | Breaking Sound |
+| Main | Barking Sound | Breaking Sound | 
 | :------------: | :------------: | :------------: |
 |<img  height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/8b4086cc-7856-43d3-a0bf-9a760f462633.png"/> |  <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/d47db192-2508-4bed-9347-8f48dfbfa4a5.png"/> | <img height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/66b3e850-d263-48fc-b05b-eafe8f55a64b.png"/>  |
+
+| Escaped | Track Location |
+| :------------: | :------------: | 
+|<img  height="350" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/8b4086cc-7856-43d3-a0bf-9a760f462633.png"/> |  <img height="360" src="https://github.com/puddybuddy2023/puddyBuddy_fe/assets/110683103/d47db192-2508-4bed-9347-8f48dfbfa4a5.png"/> | 
 
 | Notifications | 
 | :------------: | 
