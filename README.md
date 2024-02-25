@@ -8,7 +8,9 @@
 'Space Dog' is an application with a wearable device for dogs, to help hearing-impaired individuals in caring for their pets. Our application detects when a dog barks or breaks something and alerts the user when their pet escapes, providing the ability to track its location.
 
 * Google Soultion Challenge 2024
-* 🎬 
+
+🎬 https://www.youtube.com/
+
 
 
 <br>
@@ -54,6 +56,7 @@
 <img width="500" alt="image" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/48afb51c-0ad0-42c9-8eb9-ae918def80fb">
 
 <br>
+
 
  ## 📱 Screens
 
