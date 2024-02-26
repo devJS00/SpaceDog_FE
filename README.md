@@ -95,3 +95,5 @@ flutter pub get
 ```bash
 flutter run
 ```
+
+🚨 Since this project relies on hardware components, running it without the devices may pose challenges.
