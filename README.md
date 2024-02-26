@@ -96,4 +96,4 @@ flutter pub get
 flutter run
 ```
 
-🚨 Since this project relies on hardware components, running it without the devices may pose challenges.
+**🚨 Since this project is dependent on physical device, running it without the device may pose challenges.**
