@@ -96,36 +96,45 @@ class _HomePageState extends State<HomePage> {
                           builder: (BuildContext context,
                               AsyncSnapshot soundSnapshot) {
                             return FutureBuilder<Map<String, dynamic>>(
-                              future: myFuture,
-                              builder: (context, dogNameSnapshot) {
-                                if (dogNameSnapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
-                                } else if (dogNameSnapshot.hasError) {
-                                  return Text(
-                                      'Error: ${dogNameSnapshot.error}');
-                                } else {
-                                  if (dogNameSnapshot.hasData) {
-                                    String dogName =
-                                        dogNameSnapshot.data!['dog_name'];
-                                    // String currentSound =
-                                    //     soundSnapshot.data!['sound'];
-                                    // String currentLat =
-                                    //     locationSnapshot.data!['latitude'];
-                                    // String currentLong =
-                                    //     locationSnapshot.data!['longitude'];
-
-                                    return DogState(
-                                        currentSound: 2,
-                                        currentLat: 10.0,
-                                        currentLong: 6.0,
-                                        dogName: dogName);
+                                future: myFuture,
+                                builder: (context, dogNameSnapshot) {
+                                  if (dogNameSnapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return CircularProgressIndicator();
+                                  } else if (dogNameSnapshot.hasError) {
+                                    return Text(
+                                        'Error: ${dogNameSnapshot.error}');
                                   } else {
-                                    return Text('No data available');
+                                    if (dogNameSnapshot.hasData) {
+                                      String dogName =
+                                          dogNameSnapshot.data!['dog_name'];
+
+                                      if (soundSnapshot.hasData) {
+                                        String currentSound =
+                                            soundSnapshot.data[0]['sound'];
+
+                                        if (locationSnapshot.hasData) {
+                                          double currentLat =
+                                              locationSnapshot.data['latitude'];
+                                          double currentLong = locationSnapshot
+                                              .data['longitude'];
+
+                                          return DogState(
+                                              currentSound: currentSound,
+                                              currentLat: currentLat,
+                                              currentLong: currentLong,
+                                              dogName: dogName);
+                                        } else {
+                                          return Text('No data available');
+                                        }
+                                      } else {
+                                        return Text('No data available');
+                                      }
+                                    } else {
+                                      return Text('No data available');
+                                    }
                                   }
-                                }
-                              },
-                            );
+                                });
                           });
                     }),
               ),
@@ -138,7 +147,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 class DogState extends StatefulWidget {
-  final int currentSound;
+  final String currentSound;
   final double currentLat;
   final double currentLong;
   final String dogName;
@@ -186,11 +195,10 @@ class _DogStateState extends State<DogState> {
 
         if (snapshot.connectionState == ConnectionState.done) {
           double maxLat = snapshot.data!['max_lat'];
-          print(maxLat);
           double minLat = snapshot.data!['min_lat'];
           double maxLong = snapshot.data!['max_long'];
           double minLong = snapshot.data!['min_long'];
-
+          // when dog escapes
           if (widget.currentLat > maxLat ||
               widget.currentLat < minLat ||
               widget.currentLong > maxLong ||
@@ -280,90 +288,9 @@ class _DogStateState extends State<DogState> {
                 ),
               ],
             );
-          } else if (widget.currentSound == 1) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FindDog(
-                              currentLat: widget.currentLat,
-                              currentLong: widget.currentLong,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                        width: MediaQuery.of(context).size.width * 0.17,
-                        height: MediaQuery.of(context).size.width * 0.17,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: const Color(0xFF6D71D2).withOpacity(0.8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 3,
-                              spreadRadius: 3,
-                              offset: const Offset(0, 1),
-                            )
-                          ],
-                        ),
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.white.withOpacity(0.8),
-                          size: 40,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.65,
-                      height: MediaQuery.of(context).size.width * 0.65,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: const Color(0xFF6D71D2).withOpacity(0.3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 3,
-                            spreadRadius: 3,
-                            offset: const Offset(0, 1),
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: Image.asset(
-                        'assets/images/dog_state/dog_floating.png',
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                MessageBox(
-                  message: '....',
-                ),
-              ],
-            );
           }
           // when dog is barking
-          else if (widget.currentSound == 2) {
+          else if (widget.currentSound == "barking") {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -450,7 +377,7 @@ class _DogStateState extends State<DogState> {
             );
           }
           // when dog broke something
-          else if (widget.currentSound == 3) {
+          else if (widget.currentSound == "breaking") {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -536,9 +463,88 @@ class _DogStateState extends State<DogState> {
               ],
             );
           }
-          // when dog escaped
+          // default
           else {
-            return SizedBox();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FindDog(
+                              currentLat: widget.currentLat,
+                              currentLong: widget.currentLong,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.width * 0.17,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF6D71D2).withOpacity(0.8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 3,
+                              spreadRadius: 3,
+                              offset: const Offset(0, 1),
+                            )
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      height: MediaQuery.of(context).size.width * 0.65,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF6D71D2).withOpacity(0.3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 3,
+                            spreadRadius: 3,
+                            offset: const Offset(0, 1),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Image.asset(
+                        'assets/images/dog_state/dog_floating.png',
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                MessageBox(
+                  message: '....',
+                ),
+              ],
+            );
           }
         }
 
