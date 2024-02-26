@@ -7,7 +7,7 @@
 
 'Space Dog' is an application with a wearable device for dogs, to help hearing-impaired individuals in caring for their pets. Our application detects when a dog barks or breaks something and alerts the user when their pet escapes, providing the ability to track its location.
 
-🎬 https://www.youtube.com/
+🎬 https://www.youtube.com/watch?v=X7PKkTF3mIk
 
 
 ## 🐈‍⬛ GitHub
