@@ -195,7 +195,8 @@ class _SignInFormState extends State<SignInForm> {
                             ),
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.symmetric(vertical: 7),
-                                primary: Color(0xFF6D71D2).withOpacity(0.8),
+                                backgroundColor:
+                                    Color(0xFF6D71D2).withOpacity(0.8),
                                 elevation: 5),
                           ),
                         ),

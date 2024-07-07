@@ -196,7 +196,7 @@ class _StartState extends State<Start> {
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 8),
-                        primary: Color(0xFF6D71D2).withOpacity(0.5),
+                        backgroundColor: Color(0xFF6D71D2).withOpacity(0.5),
                         elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -257,7 +257,7 @@ class _StartState extends State<Start> {
                       style: ElevatedButton.styleFrom(
                         padding:
                             EdgeInsets.symmetric(vertical: 8), // 회원가입 버튼 높이
-                        primary: Color(0xFF6D71D2).withOpacity(0.5),
+                        backgroundColor: Color(0xFF6D71D2).withOpacity(0.5),
                         elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),

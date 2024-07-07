@@ -87,7 +87,7 @@ class MySettings extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFFA8ABFF),
+                                    backgroundColor: Color(0xFFA8ABFF),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
@@ -105,7 +105,7 @@ class MySettings extends StatelessWidget {
                                 SizedBox(width: 8),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey,
+                                    backgroundColor: Colors.grey,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
@@ -149,7 +149,7 @@ class MySettings extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFFA8ABFF),
+                                    backgroundColor: Color(0xFFA8ABFF),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
@@ -182,7 +182,7 @@ class MySettings extends StatelessWidget {
                                 SizedBox(width: 8),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey,
+                                    backgroundColor: Colors.grey,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),

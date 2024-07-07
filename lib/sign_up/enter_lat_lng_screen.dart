@@ -284,7 +284,7 @@ class _EnterHomeLatLngState extends State<EnterHomeLatLng> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(105, 50),
-                    primary: Color(0xFF6D71D2).withOpacity(0.4),
+                    backgroundColor: Color(0xFF6D71D2).withOpacity(0.4),
                     elevation: 3,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45), // 모서리를 둥글게

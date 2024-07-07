@@ -205,7 +205,8 @@ class _SignupFormState extends State<SignupForm> {
                               },
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(vertical: 7),
-                                  primary: Color(0xFF6D71D2).withOpacity(0.8),
+                                  backgroundColor:
+                                      Color(0xFF6D71D2).withOpacity(0.8),
                                   elevation: 5),
                               child: Text(
                                 'REGISTER',
