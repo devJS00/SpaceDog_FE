@@ -1,14 +1,17 @@
-# SPACE DOG🚀
+# SPACE DOG🚀 (2024 Google Solution Challenge)
 
 <div align="center">
 <img width="200" alt="image" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/24fffaa4-d04e-461c-99c8-eba3321f305c">
 </div>
 <br>
 
+**🏆2024 Google Solution Challenge TOP 100 Winner🏆**
+
 'Space Dog' is an application with a wearable device for dogs, to help hearing-impaired individuals in caring for their pets. Our application detects when a dog barks or breaks something and alerts the user when their pet escapes, providing the ability to track its location.
 
 🎬 https://www.youtube.com/watch?v=X7PKkTF3mIk
 
+<br>
 
 ## 🐈‍⬛ GitHub
 FE: https://github.com/GDSC-CAU/SpaceDog_FE
@@ -60,7 +63,7 @@ BE: https://github.com/GDSC-CAU/SpaceDog_BE
 
  ## 📱 Screens
 
-| SIgn-in/Sign-up | 
+| Sign-in/Sign-up | 
 | :------------: |
 | <img height="360" src="https://github.com/GDSC-CAU/SpaceDog_FE/assets/110683103/08327c68-52c5-4537-a83b-4145bc7dcd39"/> |
 
